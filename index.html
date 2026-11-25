@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f8f5f2">
+  <title>M5 Ultra · Pump Control</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="demo-scrollbars.css">
+  <link rel="stylesheet" href="m5-night-light.css?v=14">
+  <script src="m5-night-light.js?v=13" defer></script>
+</head>
+<body>
+  <main class="phone m5-phone" id="demo">
+    <div class="status" aria-hidden="true">
+      <span>9:41</span>
+      <span class="status-icons">
+        <img src="assets/figma-review/status-cellular.svg" alt="">
+        <img src="assets/figma-review/status-wifi.svg" alt="">
+        <img src="assets/figma-review/status-battery.svg" alt="">
+      </span>
+    </div>
+
+    <section id="control" class="screen m5-control" aria-label="Pump Control">
+      <header class="top">
+        <span class="circle-btn m5-chevron" aria-hidden="true"><img src="assets/m5/chevron.svg" alt=""></span>
+        <h1>Pump Control</h1>
+        <button class="circle-btn" id="open-settings" aria-label="Settings">
+          <img src="assets/m5/gear.svg" alt="">
+        </button>
+      </header>
+      <div class="control-content">
+        <div class="pump-pair">
+          <div class="m5-pump"><span class="pump-portrait" aria-hidden="true"><span><img src="assets/m5/pumpSource.png" alt=""></span></span><span>L <b class="battery">100</b></span><time>13:50</time></div>
+          <div class="sync-mark"><span><img src="assets/m5/syncMark.svg" alt=""></span>Sync</div>
+          <div class="m5-pump"><span class="pump-portrait" aria-hidden="true"><span><img src="assets/m5/pumpSource.png" alt=""></span></span><span>R <b class="battery">100</b></span><time>13:50</time></div>
+        </div>
+        <section class="mode-panel m5-modes" aria-label="Current pumping mode">
+          <div class="mode-heading"><span class="manual-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span> Manual <img class="trailing" src="assets/m5/next.svg" alt=""></div>
+          <div class="mode-tabs">
+            <span class="picked"><img src="assets/m5/stimulation.svg" alt="">Stimulation</span>
+            <span><img src="assets/m5/expression.svg" alt="">Expression</span>
+            <span><img src="assets/m5/mixed.svg" alt="">Mixed</span>
+          </div>
+        </section>
+        <section class="level-panel m5-levels" aria-label="Current pumping levels">
+          <div class="level"><label>L Level (1–9)</label><div class="level-track"><span class="tick-list" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="level-button">5</span></div></div>
+          <div class="both"><label><img src="assets/m5/sync.svg" alt=""> Both</label><div class="both-track"><span class="tick-list" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="both-toggle"><img src="assets/m5/both.svg" alt=""></span></div></div>
+          <div class="level"><label>R Level (1–9)</label><div class="level-track"><span class="tick-list" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="level-button">5</span></div></div>
+        </section>
+        <section class="light-card" aria-label="Night light">
+          <div class="light-row">
+            <div class="light-label">
+              <img src="assets/m5/bulb.svg" alt="">
+              <div class="light-copy">
+                <span id="manual-light-label">Light</span>
+                <span class="light-countdown" id="light-countdown" role="timer" aria-label="Time until the light turns off" hidden></span>
+              </div>
+            </div>
+            <button class="switch light-switch" id="manual-light" role="switch" aria-checked="false" aria-labelledby="manual-light-label"><i></i></button>
+          </div>
+          <div class="brightness" id="brightness" hidden>
+            <output id="brightness-value" for="brightness-input">50%</output>
+            <div class="brightness-track">
+              <span class="brightness-fill" aria-hidden="true"></span>
+              <span class="brightness-marks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+              <span class="brightness-axis" aria-hidden="true"><span class="brightness-thumb"></span></span>
+              <input type="range" id="brightness-input" min="0" max="100" step="25" value="50" aria-label="Night light brightness">
+            </div>
+          </div>
+          <div class="auto-light-footer">
+            <button type="button" class="auto-light-help" id="auto-light-help" aria-haspopup="dialog">
+              <span class="auto-light-help-name">
+                <span>Auto Switch</span>
+                <span id="auto-light-duration">30s</span>
+              </span>
+              <span class="auto-light-help-icon" aria-hidden="true">?</span>
+            </button>
+          </div>
+        </section>
+      </div>
+      <footer class="session-actions">
+        <button class="finish-session" id="finish-session"><img src="assets/m5/stop.svg" alt=""> Hold to finish</button>
+        <button class="session-button" id="pause" aria-label="Pause pumping" aria-pressed="false"><span class="pause-glyph" aria-hidden="true"><img src="assets/m5/pause.svg" alt=""></span></button>
+      </footer>
+    </section>
+
+    <section id="settings" class="screen m5-settings" aria-label="Settings" hidden>
+      <header class="top"><button class="circle-btn m5-chevron" id="settings-back" aria-label="Back to Pump Control">‹</button><h1>Settings</h1></header>
+      <div class="settings-content">
+        <div class="settings-card connected">
+          <div class="mini-pumps" aria-hidden="true"><img src="assets/m5/pump.png" alt=""><img src="assets/m5/pump.png" alt=""></div>
+          <div><strong>M5 Ultra</strong><div class="connected-copy">Connected <span>L <b class="battery">100</b> R <b class="battery">100</b></span></div></div>
+          <span class="trailing" aria-hidden="true">›</span>
+        </div>
+        <h2 class="settings-label">Device Functions</h2>
+        <section class="settings-card auto-settings" id="light-settings" tabindex="-1">
+          <div class="setting-line">
+            <div><h3 id="auto-setting-title">Light on when paused</h3><p id="auto-setting-copy">The light turns on when you pause pumping so you can check the milk level.</p></div>
+            <button class="switch on" id="auto-setting" role="switch" aria-checked="true" aria-labelledby="auto-setting-title" aria-describedby="auto-setting-copy"><i></i></button>
+          </div>
+          <fieldset id="duration-settings">
+            <legend>Turn off after</legend>
+            <div class="duration-options" role="group" aria-label="Turn off after">
+              <button data-duration="10" aria-pressed="false">10s</button>
+              <button data-duration="20" aria-pressed="false">20s</button>
+              <button data-duration="30" aria-pressed="true">30s</button>
+              <button id="custom-duration" aria-pressed="false">Custom</button>
+            </div>
+          </fieldset>
+        </section>
+        <h2 class="settings-label">General Settings</h2>
+        <div class="settings-card general-settings">
+          <div>Firmware Upgrade <span class="trailing"><i></i> ›</span></div>
+          <div>Restore Factory <span class="trailing"><i></i> ›</span></div>
+          <div>Power Off Device <span class="trailing">›</span></div>
+        </div>
+        <div class="settings-card delete-device">Delete</div>
+      </div>
+    </section>
+
+    <i class="home-indicator" aria-hidden="true"></i>
+    <div class="m5-overlay" id="light-help-overlay" hidden>
+      <section class="help-dialog light-help-dialog" role="dialog" aria-modal="true" aria-labelledby="light-help-title" aria-describedby="light-help-description" lang="zh-CN">
+        <button type="button" class="circle-btn help-close" id="close-light-help" aria-label="关闭">×</button>
+        <h2 id="light-help-title">暂停自动亮灯已开启</h2>
+        <p id="light-help-description"></p>
+        <button type="button" class="m5-confirm" id="light-help-settings">去设置</button>
+      </section>
+    </div>
+    <div class="m5-overlay" id="custom-overlay" hidden>
+      <form class="help-dialog custom-dialog" id="custom-form" role="dialog" aria-modal="true" aria-labelledby="custom-title">
+        <button type="button" class="circle-btn help-close" id="close-custom" aria-label="Close">×</button>
+        <h2 id="custom-title">Custom Duration</h2>
+        <div class="time-inputs">
+          <label><input id="custom-minutes" type="number" min="0" max="59" value="0" required> min</label>
+          <label><input id="custom-seconds" type="number" min="0" max="59" value="30" required> sec</label>
+        </div>
+        <button class="m5-confirm" type="submit">Confirm</button>
+      </form>
+    </div>
+  </main>
+</body>
+</html>
